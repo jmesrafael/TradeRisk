@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TradeRisk | Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+</head>
+<body>
+  <div class="safe" id="app">
+    <!-- Header -->
+    <div id="header"></div>
+
+    <main class="wrap">
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-content">
+          <h1 class="hero-title">Master Your Trading Risk with TradeRisk</h1>
+          <p class="hero-subtitle">
+            TradeRisk helps you calculate position sizing, manage risk, 
+            and explore premium PineScript indicators designed for smarter trading.
+          </p>
+          <div class="hero-actions">
+            <a href="/pages/calculator.html" class="primaryBtn">
+              <div class="gradientLayer">Start Calculating</div>
+            </a>
+            <a href="pages/indicators.html" class="secondaryBtn">
+              Browse Indicators
+            </a>
+          </div>
+        </div>
+        <div class="hero-graphic">
+          <img src="assets/trading-chart.png" alt="Trading chart illustration" />
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section class="features container">
+        <h2 class="sectionTitle">Why Choose TradeRisk?</h2>
+        <div class="grid features-grid">
+          <div class="card feature-card">
+            <h3>Risk Management</h3>
+            <p>Control your exposure and avoid over-leverage with smart position sizing.</p>
+          </div>
+          <div class="card feature-card">
+            <h3>Custom Indicators</h3>
+            <p>Gain access to unique PineScript tools that provide market insights.</p>
+          </div>
+          <div class="card feature-card">
+            <h3>Simple & Fast</h3>
+            <p>Clean UI and instant results for better decision-making in trading.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="cta">
+        <h2>Take Control of Your Trades Today</h2>
+        <p>Get started with TradeRisk’s free calculator or explore premium trading indicators.</p>
+        <a href="pages/indicators.html" class="primaryBtn">
+          <div class="gradientLayer">Explore Indicators</div>
+        </a>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+  </div>
+
+  <script src="load-components.js" defer></script>
+  <script src="functions.js" defer></script>
+</body>
+</html>

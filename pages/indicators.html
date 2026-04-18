@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Indicators Store | TradeRisk Calculator</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="safe" id="app">
+    <!-- Header -->
+    <div id="header"></div>
+
+    <main class="wrap">
+      <section class="container">
+        <h2 class="pageTitle">Indicators Store</h2>
+        <p class="subtitle">Browse custom PineScript indicators available for traders.</p>
+
+        <div class="grid indicators-grid">
+          <!-- Card 1 -->
+          <div class="card indicator-card">
+            <h3 class="indicator-title">Crypto Correlation Heatmap</h3>
+            <p class="indicator-desc">
+              See correlations between BTC.D, USDT.D, TOTAL2 and altcoins to identify market bias.
+            </p>
+            <div class="card-actions">
+              <a href="/pages/indicator-details.html?id=heatmap" class="primaryBtn">
+                <div class="gradientLayer">View Details</div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="card indicator-card">
+            <h3 class="indicator-title">Fair Value Gap Finder</h3>
+            <p class="indicator-desc">
+              Automatically detects FVGs with customizable thresholds and extension options.
+            </p>
+            <div class="card-actions">
+              <a href="/pages/indicator-details.html?id=fvg" class="primaryBtn">
+                <div class="gradientLayer">View Details</div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="card indicator-card">
+            <h3 class="indicator-title">Liquidity Pools Tracker</h3>
+            <p class="indicator-desc">
+              Highlights liquidity levels above/below price to assist in spotting liquidity grabs.
+            </p>
+            <div class="card-actions">
+              <a href="/pages/indicator-details.html?id=liquidity" class="primaryBtn">
+                <div class="gradientLayer">View Details</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+  </div>
+
+  <script src="../load-components.js" defer></script>
+  <script src="../functions.js" defer></script>
+</body>
+</html>

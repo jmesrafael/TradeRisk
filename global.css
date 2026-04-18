@@ -1,0 +1,117 @@
+/* Global design tokens — dark/default theme */
+:root {
+    /* Core surfaces & text */
+    --background: #0E1116;
+    --headerBg: #0b0f15;
+    --headerBorder: #1a222e;
+    --headerText: #E8EDF4;
+    --cardBg: #121821;
+    --cardBorder: #192231;
+    --label: #8da0b3;
+    --hint: #6e7b8b;
+    --inputBg: #0e141d;
+    --inputBorder: #1c2735;
+    --inputText: #e7eef8;
+    --miniBtnBg: #1a2433;
+    --miniBtnBorder: #293447;
+    --miniBtnText: #ced6e5;
+    --outBg: #0d131b;
+    --outBorder: #1c2735;
+    --outLabel: #7f90a4;
+    --outValue: #e9f0fb;
+  
+    /* Brand & utility tokens */
+    --accent: #7a5cff;
+    --buttonText: #ffffff;
+    --overlay: rgba(0,0,0,.75);
+    --overlaySoft: rgba(0,0,0,.55);
+    --shadow: 0 10px 24px rgba(0,0,0,.28);
+    --shadow-accent: 0 8px 18px rgba(122,92,255,.45);
+    --white: #ffffff;
+    --black: #000000;
+  
+    /* Glow accents (dark) */
+    --glow-primary: rgba(122, 92, 255, 0.35);
+    --glow-secondary: rgba(16, 185, 129, 0.25);
+  
+    /* Button gradient system (dark) */
+    --btn-grad-angle: 135deg;
+    --btn-grad-start: #7a5cff;
+    --btn-grad-end: #a16fff;
+    --buttonBg: linear-gradient(var(--btn-grad-angle), var(--btn-grad-start), var(--btn-grad-end));
+    --btn-grad-start-hover: color-mix(in oklab, var(--btn-grad-start) 92%, var(--white));
+    --btn-grad-end-hover: color-mix(in oklab, var(--btn-grad-end) 92%, var(--white));
+    --buttonBgHover: linear-gradient(var(--btn-grad-angle), var(--btn-grad-start-hover), var(--btn-grad-end-hover));
+    --btn-grad-start-active: color-mix(in oklab, var(--btn-grad-start) 85%, var(--black));
+    --btn-grad-end-active: color-mix(in oklab, var(--btn-grad-end) 85%, var(--black));
+    --buttonBgActive: linear-gradient(var(--btn-grad-angle), var(--btn-grad-start-active), var(--btn-grad-end-active));
+  
+    /* Fluid type scale */
+    --fs-xxs: clamp(10px, 2.2vw, 12px);
+    --fs-xs: clamp(12px, 2.3vw, 13px);
+    --fs-sm: clamp(13px, 2.4vw, 14px);
+    --fs-base: clamp(14px, 2.6vw, 16px);
+    --fs-md: clamp(16px, 2.8vw, 18px);
+    --fs-lg: clamp(18px, 3.2vw, 20px);
+    --fs-xl: clamp(20px, 3.6vw, 24px);
+    --fs-2xl: clamp(24px, 4.2vw, 30px);
+  
+    /* Modal type sizes */
+    --modal-title-size: var(--fs-xl);
+    --modal-body-size: var(--fs-base);
+    --modal-close-size: var(--fs-2xl);
+  
+    /* Line heights */
+    --lh-tight: 1.2;
+    --lh-normal: 1.5;
+    --lh-relaxed: 1.6;
+  }
+  
+  /* Light theme overrides */
+  [data-theme="light"] {
+    /* Core surfaces & text */
+    --background: #f6f8fb;
+    --headerBg: #ffffff;
+    --headerBorder: #e6ecf2;
+    --headerText: #0b1622;
+    --cardBg: #ffffff;
+    --cardBorder: #e8eef5;
+    --label: #5b6a7c;
+    --hint: #778899;
+    --inputBg: #f3f6fa;
+    --inputBorder: #dbe4ee;
+    --inputText: #0e1924;
+    --miniBtnBg: #eef3f9;
+    --miniBtnBorder: #dbe4ee;
+    --miniBtnText: #334257;
+    --outBg: #f7f9fc;
+    --outBorder: #e3ebf4;
+    --outLabel: #6b7b8f;
+    --outValue: #0b1622;
+  
+    /* Brand & utility tokens */
+    --accent: #6a5cff;
+    --buttonText: #ffffff;
+    --overlay: rgba(0,0,0,.75);
+    --overlaySoft: rgba(0,0,0,.45);
+    --shadow: 0 8px 20px rgba(29,44,72,.12);
+    --shadow-accent: 0 8px 18px rgba(106,92,255,.35);
+    --white: #ffffff;
+    --black: #000000;
+  
+    /* Glow accents (light) */
+    --glow-primary: rgba(106, 92, 255, 0.25);
+    --glow-secondary: rgba(79, 209, 197, 0.2);
+  
+    /* Button gradient system (light) */
+    --btn-grad-start: #6a5cff;
+    --btn-grad-end: #8f6fff;
+    --buttonBg: linear-gradient(var(--btn-grad-angle), var(--btn-grad-start), var(--btn-grad-end));
+    --btn-grad-start-hover: color-mix(in oklab, var(--btn-grad-start) 92%, var(--white));
+    --btn-grad-end-hover: color-mix(in oklab, var(--btn-grad-end) 92%, var(--white));
+    --buttonBgHover: linear-gradient(var(--btn-grad-angle), var(--btn-grad-start-hover), var(--btn-grad-end-hover));
+    --btn-grad-start-active: color-mix(in oklab, var(--btn-grad-start) 85%, var(--black));
+    --btn-grad-end-active: color-mix(in oklab, var(--btn-grad-end) 85%, var(--black));
+    --buttonBgActive: linear-gradient(var(--btn-grad-angle), var(--btn-grad-start-active), var(--btn-grad-end-active));
+  }
+  

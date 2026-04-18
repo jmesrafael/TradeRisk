@@ -1,0 +1,99 @@
+<!-- /components/header.html -->
+<header class="header">
+  <!-- Left hamburger -->
+  <button class="navToggle" id="navToggle" aria-label="Open navigation" aria-haspopup="true" aria-expanded="false" title="Menu">
+    <span class="navBar"></span>
+    <span class="navBar"></span>
+    <span class="navBar"></span>
+  </button>
+
+  <!-- Website Title -->
+  <h1 class="headerTitle">
+    <a href="/index.html" class="app-title-link">TradeRisk</a>
+  </h1>
+
+  <!-- Reusable Theme Toggle Component -->
+  <theme-toggle id="headerThemeToggle" size="22" class="themeToggle" title="Toggle Theme"></theme-toggle>
+</header>
+
+<!-- Sidebar Loader + Controller -->
+<script>
+(function () {
+  const SIDEBAR_URL = '/components/sidebar.html';
+  const navToggle = document.getElementById('navToggle');
+  let loaded = false;
+
+  async function mountSidebar() {
+    if (loaded) return;
+    if (document.getElementById('sidebar') && document.getElementById('sidebarBackdrop')) {
+      loaded = true;
+      wire();
+      return;
+    }
+
+    try {
+      const res = await fetch(SIDEBAR_URL, { cache: 'no-cache' });
+      const html = await res.text();
+      const wrap = document.createElement('div');
+      wrap.innerHTML = html;
+
+      const backdrop = wrap.querySelector('#sidebarBackdrop');
+      const sidebar  = wrap.querySelector('#sidebar');
+
+      if (backdrop) document.body.appendChild(backdrop);
+      if (sidebar)  document.body.appendChild(sidebar);
+
+      loaded = true;
+      wire();
+    } catch (e) {
+      console.error('[Sidebar] load failed:', e);
+    }
+  }
+
+  function wire() {
+    const sidebar  = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    if (!navToggle || !sidebar || !backdrop) return;
+
+    function open() {
+      sidebar.classList.add('open');
+      backdrop.hidden = false;
+      requestAnimationFrame(() => backdrop.classList.add('show'));
+      document.body.classList.add('sidebar-open');
+      navToggle.setAttribute('aria-expanded', 'true');
+      sidebar.setAttribute('aria-hidden', 'false');
+      sidebar.querySelector('.sidebarLink')?.focus({ preventScroll: true });
+    }
+
+    function close() {
+      sidebar.classList.remove('open');
+      backdrop.classList.remove('show');
+      document.body.classList.remove('sidebar-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      sidebar.setAttribute('aria-hidden', 'true');
+      setTimeout(() => {
+        if (!sidebar.classList.contains('open')) backdrop.hidden = true;
+      }, 180);
+      navToggle.focus({ preventScroll: true });
+    }
+
+    navToggle.addEventListener('click', () =>
+      sidebar.classList.contains('open') ? close() : open()
+    );
+
+    backdrop.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && sidebar.classList.contains('open')) close();
+    });
+    sidebar.addEventListener('click', (e) => {
+      if (e.target.closest('a')) close();
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', mountSidebar);
+  document.addEventListener('components:loaded', mountSidebar);
+})();
+</script>
+
+<!-- Theme Toggle Component -->
+<script type="module" src="/components/theme-toggle.js"></script>
