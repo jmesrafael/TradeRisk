@@ -1,0 +1,577 @@
+================================================================================
+                        TRADERISK WEBSITE DOCUMENTATION
+                  Professional Risk Management for Crypto Traders
+                                    2026
+================================================================================
+
+PROJECT OVERVIEW
+================================================================================
+TradeRisk is a professional-grade, no-signup-required web application designed
+to help crypto traders master position sizing and capital preservation. The
+platform provides real-time risk calculation tools, premium indicators, and
+educational resources to ensure traders make disciplined, data-driven trading
+decisions.
+
+Core Mission: "You can't control the market, but you can control your losses."
+
+
+WEBSITE STRUCTURE & PAGES
+================================================================================
+
+1. HOME PAGE (index.html)
+   - Professional landing page explaining TradeRisk value proposition
+   - Hero section with compelling headline and benefits
+   - Features section (6 feature cards)
+   - How It Works section (4-step process)
+   - Core Belief callout section
+   - Bottom CTA directing to calculator
+
+2. CALCULATOR PAGE (pages/calculator.html)
+   - PRIMARY TOOL: Real-time position size calculator
+   - Compact, professional interface
+   - Two-column layout (Inputs | Results)
+   - Tips & Best Practices section
+   - FAQ accordion with 5 common questions
+   - Bottom CTA to indicators page
+
+3. INDICATORS PAGE (pages/indicators.html)
+   - Showcase of premium PineScript indicators
+   - 3 indicator cards (Crypto Correlation Heatmap, Fair Value Gap Finder, Liquidity Pools Tracker)
+   - Each indicator has detailed description and "View Details" button
+
+4. LEGAL & POLICY PAGES
+   - Privacy Policy (pages/privacy-policy.html)
+   - Terms & Conditions (pages/terms.html)
+   - Disclaimer (pages/disclaimer.html)
+   - Cookie Policy (pages/cookies.html) - Uses Font Awesome icons
+   - About Us (pages/about-us.html)
+   - Contact Us (pages/contact.html)
+
+
+KEY FEATURES & FUNCTIONALITY
+================================================================================
+
+A. POSITION SIZE CALCULATOR
+   ─────────────────────────
+
+   Input Fields:
+   ✓ Account Capital - Total trading balance in USD
+   ✓ Risk Per Trade - Percentage (%) or USD amount toggle
+     - Default: 2% (per professional standards)
+     - "Set Default" button saves to local storage
+   ✓ Entry Price (Optional) - For precise margin calculations
+     - Leave blank for basic calculations
+     - Add for exact margin with leverage
+   ✓ Stop Loss - Toggle between:
+     - Price mode: Exact SL level from chart
+     - Percentage mode: Distance from entry (default)
+   ✓ Take Profit - Toggle between:
+     - Price mode: Exact TP level
+     - Percentage mode: Distance from entry (default)
+   ✓ Leverage - 1x to 500x (default: 1x)
+
+   Output Calculations:
+   ✓ Risk Amount - Maximum $ you can lose on this trade
+   ✓ Target Profit - Potential $ gain if TP is hit
+   ✓ Total Margin - Capital required (or notional exposure)
+     - Without Entry Price: Shows position value you can control
+     - With Entry Price: Shows exact margin needed at leverage level
+   ✓ Risk/Reward Ratio - Visual tracker (Poor → Average → Good → Great 3R+)
+   ✓ Leverage Note - Shows position size and margin at selected leverage
+
+   Calculation Formulas:
+   ──────────────────────
+
+   1. Risk Amount Calculation:
+      - If Risk Mode = Percentage:
+        Risk Amount = (Account Capital × Risk %) ÷ 100
+
+      - If Risk Mode = USD:
+        Risk Amount = Entered USD amount
+
+   2. Stop Loss Distance:
+      - If SL Mode = Price:
+        SL Distance = Entry Price - SL Price
+
+      - If SL Mode = Percentage:
+        SL Distance = Entry Price × (SL % ÷ 100)
+
+   3. Position Size (Notional Exposure):
+      Notional Position = Risk Amount ÷ (SL % ÷ 100)
+
+      Example: $200 risk ÷ 0.005 (0.5% SL) = $40,000 notional exposure
+
+   4. Required Margin (With Entry Price):
+      Position Size = Notional Position ÷ Entry Price
+      Required Margin = (Position Size × Entry Price) ÷ Leverage
+
+      Example: $40,000 ÷ $50,000 entry = 0.8 BTC
+               At 5x leverage: $40,000 ÷ 5 = $8,000 margin needed
+
+   5. Target Profit:
+      - If TP Mode = Price:
+        Profit Per Unit = Target Price - Entry Price
+        Total Profit = Profit Per Unit × Position Size
+
+      - If TP Mode = Percentage:
+        Target Price = Entry × (1 + TP% ÷ 100)
+        Total Profit = Calculated same way
+
+   6. Risk/Reward Ratio:
+      R:R Ratio = Target Profit ÷ Risk Amount
+      Visual bar fills based on ratio quality:
+      - 0-1:1 = Poor (red)
+      - 1:1-1.5:1 = Average (orange)
+      - 1.5:1-2:1 = Good (yellow)
+      - 2:1+ = Great (green)
+
+
+B. LOCAL STORAGE & DEFAULTS
+   ────────────────────────
+
+   Every visitor's preferences are UNIQUE to their browser:
+   - Default Risk % or USD amount
+   - Default Account Capital
+   - Selected Risk Mode (% or USD)
+   - Theme preference (Light/Dark)
+
+   Storage Keys Format: "traderisk_[key]"
+   Examples:
+   - traderisk_defaultRisk = "2"
+   - traderisk_defaultCapital = "10000"
+   - traderisk_riskMode = "pct"
+
+   "Set Default" button:
+   - Saves current input to browser storage
+   - Shows confirmation feedback
+   - Auto-loads next visit (only for that user, that browser)
+   - Never synced to servers (100% private)
+
+
+C. RESPONSIVE DESIGN
+   ──────────────────
+
+   Layout Breakpoints:
+   ✓ Desktop: 1200px+ (2-column calculator layout)
+   ✓ Tablet: 768px-1199px (2-column → 1-column transition)
+   ✓ Mobile: 768px and below (1-column stacked)
+
+   Mobile-Friendly:
+   - Touch-friendly button sizes
+   - Optimized input fields for mobile keyboards
+   - Readable font sizes across all devices
+   - Proper spacing and padding
+
+
+D. THEME SYSTEM
+   ─────────────
+
+   Silver-Black Premium Theme (Default):
+   - Deep charcoal backgrounds (#0a0a0a, #121212)
+   - Silver accents (#c0c0c0, #a0a0a0)
+   - Professional gradients and shadows
+   - Smooth transitions on all interactive elements
+   - Subtle shine effects on hover
+
+   Light Theme (Alternative):
+   - Light backgrounds (#f5f5f5)
+   - Dark text for readability
+   - Same silver accent colors
+   - Reduced contrast glow effects
+
+   Theme Switching:
+   - Toggle button in header
+   - Preference saved to local storage
+   - Applies instantly across all pages
+   - CSS custom properties for easy switching
+
+
+E. INTERACTIVE ELEMENTS
+   ─────────────────────
+
+   Toggle Buttons:
+   ✓ Risk Mode: % vs USD (easy switching)
+   ✓ Stop Loss Mode: Price vs % (percentage is default)
+   ✓ Take Profit Mode: Price vs % (percentage is default)
+
+   Hover Effects:
+   ✓ Input fields: Silver border glow on focus
+   ✓ Buttons: Subtle shine and elevation on hover
+   ✓ Cards: Lifted shadow effect with border accent
+   ✓ Features: Smooth color transitions
+
+   Help Tooltips:
+   ✓ "?" help icons on all input fields
+   ✓ Hoverable tooltips explaining each field
+   ✓ Clear, professional language for beginners
+
+   Feedback System:
+   ✓ "Saved" confirmation when setting defaults
+   ✓ Real-time calculation updates
+   ✓ Disabled state for invalid inputs
+   ✓ Toast notifications for user actions
+
+
+EDUCATIONAL CONTENT
+================================================================================
+
+Risk Management Fundamentals Section (6 Cards):
+
+1. "Risk 1–2% per trade"
+   - Professional traders rarely risk more than 1–2% per trade
+   - Keeps drawdowns manageable
+   - Allows survival of losing streaks
+
+2. "Aim for 2R or better"
+   - Minimum 2:1 reward-to-risk ratio
+   - Only need 34% win rate to break even
+   - 50% win rate with 2R = consistent growth
+
+3. "Protect your capital first"
+   - Capital preservation is job #1
+   - 50% loss requires 100% gain to recover
+   - Use calculator every time, no exceptions
+
+4. "Leverage cuts both ways"
+   - Amplifies both gains and losses
+   - Size position based on SL distance, not account balance
+   - Leverage ÷ capital requirement, not position size
+
+5. "Consistency over perfection"
+   - One outsized loss can erase weeks of gains
+   - Consistent 1–2% risk sizing compounds into edge
+   - Impulsive sizing destroys edge
+
+6. "Track every trade"
+   - Position sizing is only half the edge
+   - Log every trade to discover working setups
+   - Patterns emerge quickly from data
+
+
+FAQ Section (5 Questions):
+
+1. "How does position size affect my risk?"
+   - Position size determines gain/loss per price unit
+   - Sizing position so SL = risk amount ensures consistent risk
+   - Foundation of professional risk management
+
+2. "What's the difference between % and USD risk mode?"
+   - % mode: Risk as fraction of account (scales with growth)
+   - USD mode: Fixed dollar amount per trade
+   - Most traders prefer % for automatic scaling
+
+3. "What is a good risk-to-reward ratio?"
+   - Professional target: 1:2 minimum
+   - 34% win rate at 1:2 = break even
+   - 50% win rate = steady growth
+   - 1:3+ gives significant statistical edge
+
+4. "Does leverage change my position size?"
+   - Leverage changes margin requirement, NOT risk
+   - $100 risk at 10x still = $100 loss
+   - But only need 1/10th capital margin
+   - Your SL always defines your risk
+
+5. "Why should I use position sizing?"
+   - Difference between sustainable trading and blowups
+   - Consistent % risk scales with account growth/shrinkage
+   - Survive bad stretches and capitalize on winning streaks
+
+
+INDICATORS STORE
+================================================================================
+
+Three Premium PineScript Indicators:
+
+1. Crypto Correlation Heatmap
+   - See correlations between BTC.D, USDT.D, TOTAL2, altcoins
+   - Identify market bias quickly
+   - Color-coded heat visualization
+
+2. Fair Value Gap Finder
+   - Automatically detects FVGs
+   - Customizable thresholds and extensions
+   - Professional-grade accuracy
+
+3. Liquidity Pools Tracker
+   - Highlights liquidity above/below price
+   - Spot liquidity grabs
+   - Multi-timeframe support
+
+
+TECHNICAL FEATURES
+================================================================================
+
+Performance:
+✓ Real-time calculations (instant feedback)
+✓ No server requests (all local calculations)
+✓ Fast load times (optimized assets)
+✓ Smooth animations (60fps transitions)
+✓ Progressive enhancement (works without JavaScript baseline)
+
+Security & Privacy:
+✓ No data collection (no analytics, no tracking)
+✓ No third-party cookies
+✓ All data stored locally (browser only)
+✓ HTTPS-ready structure
+✓ No user accounts required
+
+Accessibility:
+✓ ARIA labels on all inputs
+✓ Semantic HTML structure
+✓ Keyboard navigation support
+✓ Color contrast meets WCAG standards
+✓ Screen reader compatible
+
+Fonts & Typography:
+✓ Primary Font: Outfit (modern, professional)
+✓ Fallback fonts: system-ui, Segoe UI, Roboto
+✓ Responsive font scaling (clamp() for fluid sizing)
+✓ Clear hierarchy (h1, h2, h3, body, labels)
+
+Browser Support:
+✓ Chrome/Chromium 90+
+✓ Firefox 88+
+✓ Safari 14+
+✓ Edge 90+
+✓ Mobile browsers (iOS Safari, Chrome Android)
+
+
+HOW TRADERISK HELPS TRADERS
+================================================================================
+
+PROBLEM IT SOLVES:
+──────────────────
+Most traders struggle with:
+✓ Inconsistent position sizing
+✓ Risking too much per trade (blowing up accounts)
+✓ No risk management framework
+✓ Manual, error-prone calculations
+✓ Ignoring the leverage/margin relationship
+✓ Not tracking win rate vs risk/reward
+✓ Emotional decisions instead of disciplined sizing
+
+SOLUTION PROVIDED:
+──────────────────
+1. ONE-MINUTE SETUP
+   - Enter capital, risk %, stop loss %
+   - Get exact position size and margin
+   - No complicated formulas to memorize
+
+2. INSTANT CONFIDENCE
+   - Know exactly how much you'll lose if SL is hit
+   - Understand your R:R ratio before entering
+   - Make risk-aware decisions
+
+3. CAPITAL PRESERVATION
+   - Consistent 1–2% risk prevents account wipeouts
+   - 50% loss requires only 100% gain to recover
+   - Protects principal for long-term compounding
+
+4. PSYCHOLOGICAL EDGE
+   - Discipline through predetermined sizing
+   - Removes emotional "feel" from position sizing
+   - Trading becomes mechanical and systematic
+
+5. EDGE DISCOVERY
+   - Log trades with TradeRisk sizing
+   - Discover which setups have positive expectancy
+   - Iterate toward consistent profitability
+
+6. SCALABILITY
+   - Account grows: risk amount automatically scales
+   - Account shrinks: protection kicks in automatically
+   - Same 2% rule works whether you have $1k or $100k
+
+
+TYPICAL USER WORKFLOWS
+================================================================================
+
+SCENARIO 1: Quick Trade Setup
+────────────────────────────
+1. See promising trade on chart
+2. Note entry price, SL price, TP price
+3. Open TradeRisk calculator
+4. Enter: Capital ($10,000), Risk (2%), SL (0.5%)
+5. Get: Total Margin needed
+6. Place order with exact position size
+7. Risk is capped at exactly $200
+
+Time required: 60 seconds
+Result: Disciplined, sized trade
+
+SCENARIO 2: First-Time Trader
+─────────────────────────────
+1. Read "Risk Management Fundamentals" section
+2. Watch how R:R ratio affects win rate requirements
+3. Use calculator with various scenarios
+4. Understand leverage-to-margin relationship
+5. Set default risk to 2%
+6. Build confidence through education
+
+Time required: 15 minutes
+Result: Informed, confident trader
+
+SCENARIO 3: Crypto Specialist Using Indicators
+──────────────────────────────────────────────
+1. Use Correlation Heatmap to identify BTC.D strength
+2. Use FVG Finder for entry level precision
+3. Use Liquidity Tracker to spot liquidity grabs
+4. Use TradeRisk calculator to size position
+5. Execute trade with full risk awareness
+
+Time required: 30 minutes per trade
+Result: Professional-grade analysis + sizing
+
+
+BENEFITS BY USER TYPE
+================================================================================
+
+FOR BEGINNERS:
+✓ Learn position sizing fundamentals
+✓ Simple, foolproof calculator
+✓ Tooltips explain every field
+✓ FAQ answers common questions
+✓ Can't make sizing mistakes with formulas
+
+FOR INTERMEDIATE TRADERS:
+✓ Fast calculation saves time
+✓ R:R ratio visualization
+✓ Local defaults speed up repeat trades
+✓ Educational tips reinforce best practices
+✓ Indicators enhance analysis
+
+FOR PROFESSIONAL TRADERS:
+✓ No-login tool for quick setup
+✓ Multi-device consistency (any browser)
+✓ Clean interface (no bloat or distractions)
+✓ Precise calculations (down to decimals)
+✓ Leverage/margin relationships clear
+✓ Indicators provide edge in crypto markets
+
+FOR RISK MANAGERS/EDUCATORS:
+✓ Teach position sizing objectively
+✓ Show leverage impact visually
+✓ FAQ answers student questions
+✓ Tips section reinforces discipline
+✓ Calculator demonstrates concepts
+
+
+COMPETITIVE ADVANTAGES
+================================================================================
+
+vs. Manual Calculations:
+✓ 10x faster
+✓ No formula errors
+✓ Real-time updates
+✓ Ratio visualization
+
+vs. Trading Platforms:
+✓ Runs on any device
+✓ No account required
+✓ No data sharing
+✓ Focused UX (no clutter)
+
+vs. Spreadsheets:
+✓ Mobile-friendly
+✓ Immediate feedback
+✓ Professional design
+✓ Always accessible
+✓ No setup required
+
+vs. AI/Complex Tools:
+✓ Simple, transparent math
+✓ User understands every number
+✓ No hidden algorithms
+✓ 100% trust in results
+
+
+USAGE STATISTICS (Hypothetical)
+================================================================================
+
+Average Session:
+- Time on calculator: 3–5 minutes
+- Calculations per session: 2–4
+- Return rate: High (users bookmark it)
+
+Key Conversions:
+- Landing page → Calculator: 65%
+- Calculator → Indicators: 20%
+- Default savings: 40% of active users
+
+Mobile vs Desktop:
+- Mobile traffic: 45%
+- Desktop traffic: 55%
+- Same engagement metrics
+
+
+FUTURE ROADMAP IDEAS
+================================================================================
+
+Potential Enhancements:
+✓ Trade journal integration
+✓ Multi-symbol portfolio tracking
+✓ Statistics (win rate, drawdown analysis)
+✓ Mobile app (iOS/Android)
+✓ API for automated trading
+✓ More indicators in store
+✓ Community features
+✓ Performance benchmarking
+
+
+LEGAL & COMPLIANCE
+================================================================================
+
+Disclaimer:
+- Not financial advice
+- No guarantee of results
+- Educational purpose
+- User responsibility
+- See Disclaimer page for full terms
+
+Privacy:
+- No data collection
+- No cookies tracking
+- See Privacy Policy page
+
+Terms:
+- Educational use only
+- No liability for trades
+- See Terms & Conditions page
+
+
+ACCESSIBILITY & INCLUSIVITY
+================================================================================
+
+Supports:
+✓ Screen readers
+✓ Keyboard navigation
+✓ Zoom at 200%+
+✓ Light/dark themes
+✓ Multiple languages (if i18n added)
+✓ Various input methods (mouse, touch, keyboard)
+
+
+CONCLUSION
+================================================================================
+
+TradeRisk is a focused, professional tool that solves ONE problem exceptionally
+well: helping traders size positions consistently and avoid account wipeouts.
+
+Core Value Proposition:
+"Calculate exact position size in 60 seconds. Trade with confidence. Keep your
+losses consistent. Build compounding wealth over time."
+
+By removing the friction from position sizing and making risk management
+transparent, TradeRisk empowers traders to trade like professionals, regardless
+of experience level.
+
+The calculator is simple enough for beginners to understand, fast enough for
+professionals to use daily, and powerful enough to form the foundation of a
+sustainable trading edge.
+
+================================================================================
+Document Version: 1.0
+Last Updated: April 19, 2026
+Website Version: 2026
+================================================================================
