@@ -3,154 +3,150 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Trade Calculator | TradeRisk</title>
-  <meta name="description" content="Use the TradeRisk Calculator to manage risk, calculate position sizing, and protect your capital effectively." />
+  <title>TradeRisk - Professional Risk Management Calculator</title>
+  <meta name="description" content="Master position sizing and risk management with TradeRisk. Calculate margins, manage capital, and trade with confidence using data-driven position sizing." />
   <link rel="canonical" href="/index.html" />
   <link rel="stylesheet" href="/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-  <link rel="manifest" href="/images/site.webmanifest">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.svg">
 </head>
 <body>
   <div class="safe" id="app">
     <!-- Header -->
     <div id="header"></div>
 
-    <!-- Calculator -->
+    <!-- Hero Section -->
     <main class="wrap">
-      <section class="container">
-        <div class="card">
-          <h2>TradeRisk Calculator</h2>
-          <p>Quickly calculate your position size, margin, and risk exposure for safer trading decisions.</p>
-
-          <div class="help-icon" id="howToUseBtn" title="How to Use">?</div>
-
-          <!-- Stoploss % -->
-          <div class="fieldWrap">
-            <div class="labelRow">
-              <div class="label">Stoploss %</div>
-            </div>
-            <div class="inputRow">
-              <input class="input" id="stoploss" type="text" inputmode="decimal" aria-label="Stoploss percent" placeholder="0.00">
-            </div>
+      <section class="hero">
+        <div class="hero-content">
+          <h1 class="hero-title">Master Position Sizing</h1>
+          <p class="hero-subtitle">
+            TradeRisk is your professional-grade risk management calculator. Calculate precise position sizes, manage margin effectively, and trade with confidence using data-driven position sizing strategies.
+          </p>
+          <div class="hero-actions">
+            <a href="/pages/calculator.html" class="primaryBtn">
+              <div class="gradientLayer"><i class="fas fa-calculator"></i> Launch Calculator</div>
+            </a>
+            <a href="#features" class="secondaryBtn">Learn More</a>
           </div>
-
-          <!-- Account Risk -->
-          <div class="fieldWrap">
-            <div class="labelRow">
-              <div class="label">Account Risk</div>
-              <div class="hint" id="riskDefaultLabel">Default: 2%</div>
-            </div>
-            <div class="inputRow">
-              <input class="input" id="risk" type="text" inputmode="decimal" aria-label="Account risk percent" placeholder="0.00">
-              <button class="miniBtn" id="setRisk"><span class="miniBtnText">Set Default</span></button>
-            </div>
-          </div>
-
-          <!-- Account Capital -->
-          <div class="fieldWrap">
-            <div class="labelRow">
-              <div class="label">Account Capital</div>
-              <div class="hint" id="capitalDefaultLabel">Default: $10,000.00</div>
-            </div>
-            <div class="inputRow">
-              <input class="input" id="capital" type="text" inputmode="decimal" aria-label="Account capital dollars" placeholder="0.00">
-              <button class="miniBtn" id="setCap"><span class="miniBtnText">Set Default</span></button>
-            </div>
-          </div>
-
-          <!-- Output: Margin -->
-          <div class="outBox">
-            <div class="outLabel">Margin</div>
-            <div class="outValue" id="marginOut">$0.00</div>
-          </div>
-
-          <!-- Output: Risk Amount -->
-          <div class="outBox">
-            <div class="outLabel">Risk Amount</div>
-            <div class="outValue" id="riskOut">$0.00</div>
-          </div>
-
-          <!-- Clear -->
-          <div class="actions center">
-            <button class="primaryBtn" id="clearAll">
-              <div class="gradientLayer">Clear All</div>
-            </button>
+        </div>
+        <div class="hero-graphic">
+          <div class="hero-icon-container">
+            <i class="fas fa-shield-halved"></i>
           </div>
         </div>
       </section>
+
+      <!-- Features Section -->
+      <section class="features" id="features">
+        <h2 class="sectionTitle">Why Choose TradeRisk?</h2>
+        <div class="features-grid">
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-calculator"></i>
+            </div>
+            <h3>Precise Calculations</h3>
+            <p>Calculate exact position sizes based on your account capital, risk tolerance, and stop-loss percentage. No guesswork, just math.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-shield"></i>
+            </div>
+            <h3>Risk Management</h3>
+            <p>Manage your margin and risk exposure with professional-grade precision. Protect your capital with disciplined position sizing.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Real-Time Results</h3>
+            <p>See your margin and risk amounts instantly as you adjust your parameters. Make informed trading decisions in seconds.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-lock"></i>
+            </div>
+            <h3>Save Preferences</h3>
+            <p>Store your default risk percentages and account capital locally. Quick setup for every trade without re-entering data.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-mobile-screen-button"></i>
+            </div>
+            <h3>Mobile Ready</h3>
+            <p>Access TradeRisk from any device. Trade on the go with a fully responsive, optimized interface for all screen sizes.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-tools"></i>
+            </div>
+            <h3>Premium Indicators</h3>
+            <p>Access custom PineScript indicators designed specifically for crypto traders. Enhance your analysis with professional tools.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- How It Works Section -->
+      <section class="how-it-works">
+        <h2 class="sectionTitle">How TradeRisk Works</h2>
+        <div class="steps-grid">
+
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Enter Your Capital</h3>
+            <p>Input your total account balance. This is the foundation of your position sizing calculations.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Set Risk Tolerance</h3>
+            <p>Define how much of your account you're willing to risk per trade. We recommend 1-2% for most traders.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Input Stop-Loss %</h3>
+            <p>Enter your stop-loss percentage from your charting platform (e.g., TradingView).</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">4</div>
+            <h3>Get Results</h3>
+            <p>Instantly receive your calculated margin and risk amount. Ready to place your trade confidently.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Core Belief Section -->
+      <section class="cta">
+        <h2>The Core Principle</h2>
+        <p>
+          You can't control the market. But you can control your losses.
+        </p>
+        <p style="font-size: 0.95rem; margin-top: 1rem;">
+          Position sizing is the single most important skill a trader can master. TradeRisk makes it effortless.
+        </p>
+        <div style="margin-top: 2rem;">
+          <a href="/pages/calculator.html" class="primaryBtn">
+            <div class="gradientLayer"><i class="fas fa-arrow-right"></i> Start Calculating</div>
+          </a>
+        </div>
+      </section>
+
     </main>
-
-    <!-- Tutorial Modal -->
-    <div id="tutorialModal" class="modal">
-      <div class="modal-content">
-        <span class="close-modal" id="closeModal">&times;</span>
-        <h2 class="modal-title">How to Use the TradeRisk Calculator</h2>
-
-        <div class="modal-body">
-          <div class="tutorial-step">
-            <p><strong>1. Enter your Account Capital</strong></p>
-            <p>This is your total trading balance. For example, if you have <b>$1,000</b>, type <b>1000</b> in the field.</p>
-            <img src="/images/tut1.jpg" alt="Enter Account Capital" class="tutorial-img" loading="lazy">
-          </div>
-
-          <div class="tutorial-step">
-            <p><strong>2. Set your Risk % per trade</strong></p>
-            <p>How much of your account you are willing to risk. Recommended: <b>1%–2%</b>. For example, <b>2%</b> of a <b>$1,000</b> account = <b>$20</b> risk.</p>
-            <img src="/images/tut2.jpg" alt="Set Risk Percentage" class="tutorial-img" loading="lazy">
-          </div>
-
-          <div class="tutorial-step">
-            <p><strong>3. Enter Stop-Loss %</strong></p>
-            <p>Find your Stop-Loss percentage in TradingView’s Short & Long Position Tools.</p>
-            <img src="/images/tut3.jpg" alt="Enter Stop Loss Percentage" class="tutorial-img" loading="lazy">
-            <img src="/images/tut4.jpg" alt="Stop Loss Example" class="tutorial-img" loading="lazy">
-          </div>
-
-          <div class="tutorial-step">
-            <p><strong>4. Set Margin Type</strong></p>
-            <p>Ensure your Margin Order Size is set to <b>USDT</b>. Leverage doesn’t matter; position sizing does.</p>
-            <img src="/images/tut5.jpg" alt="Set Margin Type" class="tutorial-img" loading="lazy">
-          </div>
-
-          <div class="tutorial-step">
-            <p><strong>5. Review Results</strong></p>
-            <p>The calculator displays your <b>Total Margin</b> and <b>Risk Amount</b>.</p>
-            <img src="/images/tut6.jpg" alt="Review Results" class="tutorial-img" loading="lazy">
-          </div>
-
-          <div class="tutorial-step">
-            <p><strong>6. Place Your Order</strong></p>
-            <p>Use the calculated margin and risk amount to place your trade safely.</p>
-            <img src="/images/tut7.jpg" alt="Place Order Example" class="tutorial-img" loading="lazy">
-          </div>
-
-          <div class="tutorial-step conclusion">
-            <p><strong>7. Conclusion</strong></p>
-            <p>
-              The TradeRisk Calculator helps you find the right position size and manage your risk effectively.<br><br>
-              You can’t control the market, but you can control your losses.
-            </p>
-          </div>
-        </div>
-
-        <div class="modal-footer">
-          <button id="closeModalFooter" class="primaryBtn">
-            <div class="gradientLayer">Got It</div>
-          </button>
-        </div>
-      </div>
-    </div>
 
     <!-- Footer -->
     <div id="footer"></div>
   </div>
-
-  <!-- tiny toast -->
-  <div id="toast" role="status" aria-live="polite"></div>
 
   <!-- Scripts -->
   <script src="/load-components.js" defer></script>
