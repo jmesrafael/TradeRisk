@@ -3,156 +3,963 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Trade Calculator | TradeRisk</title>
-  <meta name="description" content="Use the TradeRisk Calculator to manage risk, calculate position sizing, and protect your capital effectively." />
+  <title>Position Size Calculator | TradeRisk</title>
+  <meta name="description" content="Calculate exact position size, margin, and risk-to-reward ratio for crypto trades. Real-time results, no signup required." />
   <link rel="canonical" href="/pages/calculator.html" />
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-  <link rel="manifest" href="/images/site.webmanifest">
+  <style>
+    /* Calculator Specific Styles */
+    .page-hero {
+      text-align: center;
+      padding: clamp(2rem, 5vw, 3rem) 1rem;
+      margin-bottom: 2rem;
+    }
+    .page-hero h1 {
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 800;
+      margin: 0 0 1rem;
+      color: var(--inputText);
+      line-height: var(--lh-tight);
+    }
+    .page-hero h1 span {
+      color: var(--accent);
+    }
+    .page-hero p {
+      font-size: var(--fs-base);
+      color: var(--hint);
+      margin: 0 0 1.5rem;
+      line-height: var(--lh-relaxed);
+      max-width: 600px;
+      margin-inline: auto;
+    }
+    .hero-sub {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      font-size: 0.95rem;
+      color: var(--label);
+    }
+    .hero-sub span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .hero-sub i {
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+
+    /* Calculator Layout */
+    .calc-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    @media (max-width: 900px) {
+      .calc-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ccol {
+      background: var(--cardBg);
+      border: 1px solid var(--cardBorder);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+    .ccol-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--inputText);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .ccol-title i {
+      color: var(--accent);
+      font-size: 1.3rem;
+    }
+
+    /* Fields */
+    .cfield {
+      margin-bottom: 1.5rem;
+    }
+    .cflbl {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--label);
+    }
+    .cflbl-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .ctip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      background: var(--miniBtnBg);
+      border: 1px solid var(--miniBtnBorder);
+      border-radius: 50%;
+      font-size: 11px;
+      color: var(--miniBtnText);
+      cursor: help;
+      position: relative;
+    }
+    .ctip:hover::after {
+      content: attr(data-tip);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--miniBtnBg);
+      border: 1px solid var(--miniBtnBorder);
+      color: var(--miniBtnText);
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 10;
+      font-weight: 500;
+    }
+
+    .cinwrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .cin {
+      width: 100%;
+      background: var(--inputBg);
+      border: 1px solid var(--inputBorder);
+      color: var(--inputText);
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      outline: none;
+      font-family: 'Outfit', sans-serif;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .cin:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(192,192,192,0.15), 0 0 12px rgba(192,192,192,0.1);
+    }
+    .cin.pre {
+      padding-left: 32px;
+    }
+    .cin.suf {
+      padding-right: 45px;
+    }
+    .cipre {
+      position: absolute;
+      left: 12px;
+      color: var(--miniBtnText);
+      font-weight: 600;
+      pointer-events: none;
+    }
+    .cisuf {
+      position: absolute;
+      right: 12px;
+      color: var(--miniBtnText);
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    /* Toggle Buttons */
+    .risk-tgl, .dual-tgl {
+      display: flex;
+      gap: 4px;
+      background: var(--miniBtnBg);
+      border: 1px solid var(--miniBtnBorder);
+      border-radius: 8px;
+      padding: 4px;
+    }
+    .risk-tgl-btn, .dual-tgl-btn {
+      flex: 1;
+      padding: 8px 12px;
+      border: none;
+      background: transparent;
+      color: var(--miniBtnText);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.15s ease;
+      font-family: 'Outfit', sans-serif;
+    }
+    .risk-tgl-btn.active, .dual-tgl-btn.active {
+      background: var(--accent);
+      color: #0a0a0a;
+    }
+    .risk-tgl-btn:hover, .dual-tgl-btn:hover {
+      opacity: 0.8;
+    }
+
+    .save-feedback {
+      display: none;
+      font-size: 0.85rem;
+      color: var(--accent-secondary);
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .save-feedback.show {
+      display: flex;
+    }
+    .btn-set-def {
+      padding: 6px 12px;
+      background: var(--miniBtnBg);
+      border: 1px solid var(--miniBtnBorder);
+      color: var(--miniBtnText);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+    }
+    .btn-set-def:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .cdiv {
+      border: none;
+      border-top: 1px solid var(--cardBorder);
+      margin: 1.5rem 0;
+    }
+
+    .lev-note {
+      font-size: 0.85rem;
+      color: var(--hint);
+      margin-top: 0.5rem;
+      padding: 8px 12px;
+      background: var(--miniBtnBg);
+      border-radius: 8px;
+      border-left: 2px solid var(--accent);
+    }
+
+    /* Results */
+    .result-stack {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .crc {
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--cardBorder);
+      background: var(--miniBtnBg);
+      transition: all 0.2s ease;
+    }
+    .crc.loss {
+      border-left: 3px solid #ff4757;
+    }
+    .crc.gain {
+      border-left: 3px solid #2ed573;
+    }
+    .crl {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--label);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .crv {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      font-family: 'Outfit', sans-serif;
+    }
+    .crv.neg {
+      color: #ff4757;
+    }
+    .crv.pos {
+      color: #2ed573;
+    }
+    .crs {
+      font-size: 0.8rem;
+      color: var(--hint);
+    }
+
+    .margin-card {
+      background: linear-gradient(135deg, rgba(192,192,192,0.08) 0%, rgba(192,192,192,0.02) 100%);
+      border: 1px solid var(--cardBorder);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .margin-card-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--label);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .margin-card-val {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      font-family: 'Outfit', sans-serif;
+    }
+    .margin-card-sub {
+      font-size: 0.85rem;
+      color: var(--hint);
+    }
+
+    /* Risk/Reward */
+    .rr-section {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: var(--miniBtnBg);
+      border-radius: 12px;
+      border: 1px solid var(--cardBorder);
+    }
+    .rr-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    .rr-label {
+      color: var(--label);
+      font-size: 0.95rem;
+    }
+    .rr-val {
+      font-size: 1.5rem;
+      color: var(--accent);
+      font-family: 'Outfit', sans-serif;
+    }
+    .rr-track {
+      width: 100%;
+      height: 8px;
+      background: var(--cardBorder);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+    }
+    .rr-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff4757 0%, #ffa502 50%, #2ed573 100%);
+      width: 0%;
+      transition: width 0.2s ease;
+    }
+    .rr-ticks {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--hint);
+      font-weight: 500;
+    }
+
+    /* Tips & FAQ */
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--inputText);
+      margin-top: 3rem;
+      margin-bottom: 1.5rem;
+      padding-left: 1rem;
+    }
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .tip-card {
+      background: var(--cardBg);
+      border: 1px solid var(--cardBorder);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.2s ease;
+    }
+    .tip-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(192,192,192,0.12);
+      border-color: var(--accent);
+    }
+    .tip-icon {
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .tip-card h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--inputText);
+      margin: 0 0 0.75rem;
+    }
+    .tip-card p {
+      font-size: 0.95rem;
+      color: var(--hint);
+      margin: 0;
+      line-height: var(--lh-relaxed);
+    }
+
+    /* FAQ */
+    .faq-list {
+      background: var(--cardBg);
+      border: 1px solid var(--cardBorder);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--cardBorder);
+    }
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+    .faq-q {
+      padding: 1.25rem;
+      background: var(--cardBg);
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--inputText);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .faq-q:hover {
+      background: var(--miniBtnBg);
+    }
+    .faq-q i {
+      transition: transform 0.3s ease;
+      color: var(--accent);
+    }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .faq-a.show {
+      max-height: 500px;
+    }
+    .faq-a-inner {
+      padding: 1.25rem;
+      background: var(--miniBtnBg);
+      color: var(--hint);
+      line-height: var(--lh-relaxed);
+      font-size: 0.95rem;
+    }
+
+    /* Bottom CTA */
+    .bottom-cta {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--cardBg);
+      border: 1px solid var(--cardBorder);
+      border-radius: 16px;
+      margin-bottom: 3rem;
+    }
+    .bottom-cta h2 {
+      font-size: clamp(1.75rem, 4vw, 2.25rem);
+      font-weight: 800;
+      margin: 0 0 1rem;
+      color: var(--inputText);
+      line-height: var(--lh-tight);
+    }
+    .bottom-cta h2 span {
+      color: var(--accent);
+    }
+    .bottom-cta p {
+      font-size: var(--fs-base);
+      color: var(--hint);
+      margin: 0 0 1.5rem;
+      line-height: var(--lh-relaxed);
+    }
+    .cta-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .btn-primary {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #d4d4d4, #b8b8b8);
+      color: #0a0a0a;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      font-family: 'Outfit', sans-serif;
+    }
+    .btn-primary:hover {
+      box-shadow: 0 10px 28px rgba(192,192,192,0.25);
+      transform: translateY(-2px);
+    }
+    .btn-ghost-cta {
+      padding: 12px 24px;
+      background: var(--miniBtnBg);
+      color: var(--inputText);
+      border: 1px solid var(--cardBorder);
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      font-family: 'Outfit', sans-serif;
+    }
+    .btn-ghost-cta:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+  </style>
 </head>
 <body>
   <div class="safe" id="app">
-    <!-- Header -->
     <div id="header"></div>
 
-    <!-- Calculator -->
     <main class="wrap">
-      <section class="container">
-        <div class="card">
-          <h2>TradeRisk Calculator</h2>
-          <p>Quickly calculate your position size, margin, and risk exposure for safer trading decisions.</p>
-
-          <div class="help-icon" id="howToUseBtn" title="How to Use">?</div>
-
-          <!-- Stoploss % -->
-          <div class="fieldWrap">
-            <div class="labelRow">
-              <div class="label">Stoploss %</div>
-            </div>
-            <div class="inputRow">
-              <input class="input" id="stoploss" type="text" inputmode="decimal" aria-label="Stoploss percent" placeholder="0.00">
-            </div>
-          </div>
-
-          <!-- Account Risk -->
-          <div class="fieldWrap">
-            <div class="labelRow">
-              <div class="label">Account Risk</div>
-              <div class="hint" id="riskDefaultLabel">Default: 2%</div>
-            </div>
-            <div class="inputRow">
-              <input class="input" id="risk" type="text" inputmode="decimal" aria-label="Account risk percent" placeholder="0.00">
-              <button class="miniBtn" id="setRisk"><span class="miniBtnText">Set Default</span></button>
-            </div>
-          </div>
+      <!-- CALCULATOR -->
+      <div class="calc-container">
+        <!-- LEFT: INPUTS -->
+        <div class="ccol">
+          <div class="ccol-title"><i class="fa-solid fa-sliders"></i> Inputs</div>
 
           <!-- Account Capital -->
-          <div class="fieldWrap">
-            <div class="labelRow">
-              <div class="label">Account Capital</div>
-              <div class="hint" id="capitalDefaultLabel">Default: $10,000.00</div>
+          <div class="cfield">
+            <div class="cflbl"><div class="cflbl-left">Account Capital <span class="ctip" data-tip="Your total trading account balance in USD.">?</span></div></div>
+            <div class="cinwrap"><span class="cipre">$</span><input class="cin pre" type="number" id="cCapital" placeholder="e.g. 10000" min="0" step="any" oninput="cCalc()"></div>
+          </div>
+
+          <!-- Risk Per Trade -->
+          <div class="cfield">
+            <div class="cflbl" style="margin-bottom:6px">
+              <div class="cflbl-left">Risk Per Trade <span class="ctip" data-tip="How much you're willing to lose on this trade. 1–2% is standard practice.">?</span></div>
+              <div style="display:flex;align-items:center;gap:6px">
+                <span class="save-feedback" id="cSaveFeedback"><i class="fa-solid fa-check"></i> Saved</span>
+                <button class="btn-set-def" id="cBtnSetDef" onclick="cSaveDefault()"><i class="fa-solid fa-bookmark"></i> Set Default</button>
+              </div>
             </div>
-            <div class="inputRow">
-              <input class="input" id="capital" type="text" inputmode="decimal" aria-label="Account capital dollars" placeholder="0.00">
-              <button class="miniBtn" id="setCap"><span class="miniBtnText">Set Default</span></button>
+            <div style="display:flex;gap:6px">
+              <div class="risk-tgl">
+                <button class="risk-tgl-btn active" id="cRiskPctBtn" onclick="cSetRiskMode('pct')">%</button>
+                <button class="risk-tgl-btn" id="cRiskUsdBtn" onclick="cSetRiskMode('usd')">USD</button>
+              </div>
+              <div class="cinwrap" style="flex:1">
+                <input class="cin suf" type="number" id="cRiskVal" placeholder="e.g. 1" min="0.01" step="any" oninput="cCalc()">
+                <span class="cisuf" id="cRiskSuf">%</span>
+              </div>
             </div>
           </div>
 
-          <!-- Output: Margin -->
-          <div class="outBox">
-            <div class="outLabel">Margin</div>
-            <div class="outValue" id="marginOut">$0.00</div>
+          <hr class="cdiv">
+
+          <!-- Entry Price -->
+          <div class="cfield">
+            <div class="cflbl"><div class="cflbl-left">Entry Price <span class="ctip" data-tip="The exact price at which you enter the trade on your chart.">?</span></div></div>
+            <div class="cinwrap"><span class="cipre">$</span><input class="cin pre" type="number" id="cEntry" placeholder="e.g. 70116.10" step="any" oninput="cCalc()"></div>
           </div>
 
-          <!-- Output: Risk Amount -->
-          <div class="outBox">
-            <div class="outLabel">Risk Amount</div>
-            <div class="outValue" id="riskOut">$0.00</div>
+          <!-- Stop Loss -->
+          <div class="cfield">
+            <div class="cflbl" style="margin-bottom:5px">
+              <div class="cflbl-left">Stop Loss <span class="ctip" data-tip="Price mode: exact SL level. % mode: distance from entry as a percentage.">?</span></div>
+              <div class="dual-tgl">
+                <button class="dual-tgl-btn" id="cSlPriceBtn" onclick="cSetSlMode('price')">Price</button>
+                <button class="dual-tgl-btn active" id="cSlPctBtn" onclick="cSetSlMode('pct')">%</button>
+              </div>
+            </div>
+            <div id="cSlPriceWrap" class="cinwrap" style="display:none"><span class="cipre">$</span><input class="cin pre" type="number" id="cSLPrice" placeholder="e.g. 70007.10" step="any" oninput="cCalc()"></div>
+            <div id="cSlPctWrap" class="cinwrap"><input class="cin suf" type="number" id="cSLPct" placeholder="e.g. 0.39" step="any" min="0.001" oninput="cCalc()"><span class="cisuf">%</span></div>
           </div>
 
-          <!-- Clear -->
-          <div class="actions center">
-            <button class="primaryBtn" id="clearAll">
-              <div class="gradientLayer">Clear All</div>
-            </button>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- Tutorial Modal -->
-    <div id="tutorialModal" class="modal">
-      <div class="modal-content">
-        <span class="close-modal" id="closeModal">&times;</span>
-        <h2 class="modal-title">How to Use the TradeRisk Calculator</h2>
-
-        <div class="modal-body">
-          <div class="tutorial-step">
-            <p><strong>1. Enter your Account Capital</strong></p>
-            <p>This is your total trading balance. For example, if you have <b>$1,000</b>, type <b>1000</b> in the field.</p>
-            <img src="/images/tut1.jpg" alt="Enter Account Capital" class="tutorial-img" loading="lazy">
+          <!-- Take Profit -->
+          <div class="cfield">
+            <div class="cflbl" style="margin-bottom:5px">
+              <div class="cflbl-left">Take Profit <span class="ctip" data-tip="Price mode: exact TP level. % mode: distance from entry as a percentage.">?</span></div>
+              <div class="dual-tgl">
+                <button class="dual-tgl-btn" id="cTpPriceBtn" onclick="cSetTpMode('price')">Price</button>
+                <button class="dual-tgl-btn active" id="cTpPctBtn" onclick="cSetTpMode('pct')">%</button>
+              </div>
+            </div>
+            <div id="cTpPriceWrap" class="cinwrap" style="display:none"><span class="cipre">$</span><input class="cin pre" type="number" id="cTPPrice" placeholder="e.g. 71500" step="any" oninput="cCalc()"></div>
+            <div id="cTpPctWrap" class="cinwrap"><input class="cin suf" type="number" id="cTPPct" placeholder="e.g. 1.50" step="any" min="0.001" oninput="cCalc()"><span class="cisuf">%</span></div>
           </div>
 
-          <div class="tutorial-step">
-            <p><strong>2. Set your Risk % per trade</strong></p>
-            <p>How much of your account you are willing to risk. Recommended: <b>1%–2%</b>. For example, <b>2%</b> of a <b>$1,000</b> account = <b>$20</b> risk.</p>
-            <img src="/images/tut2.jpg" alt="Set Risk Percentage" class="tutorial-img" loading="lazy">
-          </div>
+          <hr class="cdiv">
 
-          <div class="tutorial-step">
-            <p><strong>3. Enter Stop-Loss %</strong></p>
-            <p>Find your Stop-Loss percentage in TradingView’s Short & Long Position Tools.</p>
-            <img src="/images/tut3.jpg" alt="Enter Stop Loss Percentage" class="tutorial-img" loading="lazy">
-            <img src="/images/tut4.jpg" alt="Stop Loss Example" class="tutorial-img" loading="lazy">
-          </div>
-
-          <div class="tutorial-step">
-            <p><strong>4. Set Margin Type</strong></p>
-            <p>Ensure your Margin Order Size is set to <b>USDT</b>. Leverage doesn’t matter; position sizing does.</p>
-            <img src="/images/tut5.jpg" alt="Set Margin Type" class="tutorial-img" loading="lazy">
-          </div>
-
-          <div class="tutorial-step">
-            <p><strong>5. Review Results</strong></p>
-            <p>The calculator displays your <b>Total Margin</b> and <b>Risk Amount</b>.</p>
-            <img src="/images/tut6.jpg" alt="Review Results" class="tutorial-img" loading="lazy">
-          </div>
-
-          <div class="tutorial-step">
-            <p><strong>6. Place Your Order</strong></p>
-            <p>Use the calculated margin and risk amount to place your trade safely.</p>
-            <img src="/images/tut7.jpg" alt="Place Order Example" class="tutorial-img" loading="lazy">
-          </div>
-
-          <div class="tutorial-step conclusion">
-            <p><strong>7. Conclusion</strong></p>
-            <p>
-              The TradeRisk Calculator helps you find the right position size and manage your risk effectively.<br><br>
-              You can’t control the market, but you can control your losses.
-            </p>
+          <!-- Leverage -->
+          <div class="cfield">
+            <div class="cflbl" style="margin-bottom:5px">
+              <div class="cflbl-left">Leverage <span class="ctip" data-tip="Leverage divides the required margin. 5× on $50 capital = only $10 needed.">?</span></div>
+              <span id="cLevDisplay" style="font-size:11px;color:var(--accent);font-family:'Outfit',sans-serif">1×</span>
+            </div>
+            <input class="cin" type="number" id="cLeverage" value="1" min="1" max="500" step="1" oninput="cCalc()">
+            <div class="lev-note" id="cLevNote" style="display:none">
+              At <span id="cLevNoteX">1×</span>: control <span id="cLevNotePos">—</span> with <span id="cLevNoteMargin">—</span> margin.
+            </div>
           </div>
         </div>
 
-        <div class="modal-footer">
-          <button id="closeModalFooter" class="primaryBtn">
-            <div class="gradientLayer">Got It</div>
-          </button>
+        <!-- RIGHT: OUTPUTS -->
+        <div class="ccol">
+          <div class="ccol-title"><i class="fa-solid fa-chart-bar"></i> Results</div>
+
+          <div class="result-stack">
+            <div class="crc loss">
+              <div class="crl"><i class="fa-solid fa-circle-xmark"></i> Risk (Max Loss)</div>
+              <div class="crv neg" id="cOutRisk">$0.00</div>
+              <div class="crs" id="cOutRiskSub">if stop loss is hit</div>
+            </div>
+            <div class="crc gain" id="cProfitCard" style="opacity:.35">
+              <div class="crl"><i class="fa-solid fa-arrow-trend-up"></i> Target Profit</div>
+              <div class="crv pos" id="cOutProfit">$0.00</div>
+              <div class="crs" id="cOutProfitSub">set a take profit to calculate</div>
+            </div>
+          </div>
+
+          <div class="margin-card">
+            <div class="margin-card-label"><i class="fa-solid fa-wallet"></i> Capital Required (Margin)</div>
+            <div class="margin-card-val" id="cOutMargin">$0.00</div>
+            <div class="margin-card-sub" id="cOutMarginSub">enter trade details to calculate</div>
+          </div>
+
+          <!-- Risk/Reward Section -->
+          <div class="rr-section" id="cRrSection" style="display:none">
+            <div class="rr-header"><span class="rr-label">Risk / Reward Ratio</span><span class="rr-val" id="cRrVal">0</span></div>
+            <div class="rr-track"><div class="rr-fill" id="cRrFill"></div></div>
+            <div class="rr-ticks"><span>Poor</span><span>Average</span><span>Good</span><span>Great 3R+</span></div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Footer -->
+      <!-- HERO -->
+      <div class="page-hero">
+        <h1>Crypto Position <span>Size Calculator</span></h1>
+        <p>Calculate exact position size, leverage, and risk-to-reward ratio for crypto trades. Real-time results, no signup required.</p>
+        <div class="hero-sub">
+          <span><i class="fa-solid fa-bolt"></i> Real-time results</span>
+          <span><i class="fa-solid fa-lock-open"></i> No signup required</span>
+          <span><i class="fa-brands fa-bitcoin"></i> For Crypto Traders</span>
+        </div>
+      </div>
+
+      <!-- TIPS -->
+      <div class="section-title">Risk Management Fundamentals</div>
+      <div class="tips-grid">
+        <div class="tip-card">
+          <div class="tip-icon"><i class="fa-solid fa-percent"></i></div>
+          <h4>Risk 1–2% per trade</h4>
+          <p>Professional traders rarely risk more than 1–2% of their account on a single trade. This keeps drawdowns manageable and lets you survive losing streaks.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+          <h4>Aim for 2R or better</h4>
+          <p>A minimum 2:1 reward-to-risk ratio means you only need a 34% win rate to break even. At 50% win rate with 2R, you grow consistently over time.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <h4>Protect your capital first</h4>
+          <p>Capital preservation is the #1 job. A 50% loss requires a 100% gain to recover. Use this calculator every time, no exceptions.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon"><i class="fa-solid fa-chart-line"></i></div>
+          <h4>Leverage cuts both ways</h4>
+          <p>High leverage amplifies gains but also losses. Always size your position based on your SL distance — not your account balance alone.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon"><i class="fa-solid fa-arrows-spin"></i></div>
+          <h4>Consistency over perfection</h4>
+          <p>One outsized loss can erase weeks of gains. Consistent 1–2% risk sizing across hundreds of trades compounds into edge.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon"><i class="fa-solid fa-book-open"></i></div>
+          <h4>Track every trade</h4>
+          <p>Knowing your position size is only half the edge. Log every trade to discover which setups actually work for you.</p>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="section-title">Frequently Asked Questions</div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">How does position size affect my risk? <i class="fa-solid fa-chevron-down"></i></div>
+          <div class="faq-a"><div class="faq-a-inner">Your position size determines how much money you make or lose per price unit. By sizing your position so that your stop loss equals exactly your risk amount, you ensure every trade risks the same dollar amount — regardless of the stop loss distance. This is the foundation of professional risk management.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">What's the difference between % and USD risk mode? <i class="fa-solid fa-chevron-down"></i></div>
+          <div class="faq-a"><div class="faq-a-inner">% mode calculates your risk as a fraction of your account (e.g. 1% of $1,000 = $10 risk). USD mode lets you set a fixed dollar amount to risk per trade regardless of account size. Most traders prefer % mode so risk scales proportionally as their account grows.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">What is a good risk-to-reward ratio? <i class="fa-solid fa-chevron-down"></i></div>
+          <div class="faq-a"><div class="faq-a-inner">Most professional traders target at least 1:2 (risk $1 to make $2). At a 1:2 R:R ratio, you can be right only 34% of the time and still break even. At 50% accuracy you grow steadily. A 1:3 or better ratio gives you a significant statistical edge.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">Does leverage change my position size? <i class="fa-solid fa-chevron-down"></i></div>
+          <div class="faq-a"><div class="faq-a-inner">Leverage changes how much margin (capital) you need to hold a position, but it does NOT change your risk amount. Your risk is always defined by your stop loss. Using 10× leverage with a $100 risk still means you lose $100 if the SL is hit — but you only need 1/10th of the capital.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">Why should I use position sizing? <i class="fa-solid fa-chevron-down"></i></div>
+          <div class="faq-a"><div class="faq-a-inner">Position sizing is the difference between sustainable long-term trading and blowing up your account. When you risk a consistent percentage on every trade, your wins and losses scale with your account. This allows you to survive bad stretches and capitalize on winning streaks.</div></div>
+        </div>
+      </div>
+
+      <!-- BOTTOM CTA -->
+      <div class="bottom-cta">
+        <h2>Master your <span>position sizing</span></h2>
+        <p>Use this calculator before every trade to ensure disciplined, consistent risk management across all your trades.</p>
+        <div class="cta-btns">
+          <a href="/pages/indicators.html" class="btn-primary"><i class="fa-solid fa-chart-line"></i> View Indicators</a>
+          <a href="/#features" class="btn-ghost-cta"><i class="fa-solid fa-circle-info"></i> Learn more</a>
+        </div>
+      </div>
+    </main>
+
     <div id="footer"></div>
   </div>
 
-  <!-- tiny toast -->
   <div id="toast" role="status" aria-live="polite"></div>
 
-  <!-- Scripts -->
+  <script>
+    // ========== LOCAL STORAGE MANAGEMENT ==========
+    function getStorageKey(key) {
+      return `traderisk_${key}`;
+    }
+
+    function loadDefaults() {
+      const defaultRisk = localStorage.getItem(getStorageKey('defaultRisk'));
+      const defaultCapital = localStorage.getItem(getStorageKey('defaultCapital'));
+      const defaultRiskMode = localStorage.getItem(getStorageKey('riskMode')) || 'pct';
+
+      if (defaultCapital) {
+        document.getElementById('cCapital').value = defaultCapital;
+      }
+      if (defaultRisk) {
+        document.getElementById('cRiskVal').value = defaultRisk;
+      }
+      if (defaultRiskMode) {
+        cSetRiskMode(defaultRiskMode);
+      }
+
+      // Set default modes for SL and TP to %
+      cSetSlMode('pct');
+      cSetTpMode('pct');
+    }
+
+    function cSaveDefault() {
+      const capital = document.getElementById('cCapital').value;
+      const riskVal = document.getElementById('cRiskVal').value;
+      const riskMode = document.getElementById('cRiskPctBtn').classList.contains('active') ? 'pct' : 'usd';
+
+      localStorage.setItem(getStorageKey('defaultCapital'), capital);
+      localStorage.setItem(getStorageKey('defaultRisk'), riskVal);
+      localStorage.setItem(getStorageKey('riskMode'), riskMode);
+
+      showFeedback();
+    }
+
+    function showFeedback() {
+      const feedback = document.getElementById('cSaveFeedback');
+      feedback.classList.add('show');
+      setTimeout(() => feedback.classList.remove('show'), 2000);
+    }
+
+    // ========== TOGGLE MODES ==========
+    function cSetRiskMode(mode) {
+      const pctBtn = document.getElementById('cRiskPctBtn');
+      const usdBtn = document.getElementById('cRiskUsdBtn');
+      const suffix = document.getElementById('cRiskSuf');
+
+      if (mode === 'pct') {
+        pctBtn.classList.add('active');
+        usdBtn.classList.remove('active');
+        suffix.textContent = '%';
+      } else {
+        usdBtn.classList.add('active');
+        pctBtn.classList.remove('active');
+        suffix.textContent = 'USD';
+      }
+      cCalc();
+    }
+
+    function cSetSlMode(mode) {
+      const priceBtn = document.getElementById('cSlPriceBtn');
+      const pctBtn = document.getElementById('cSlPctBtn');
+      const priceWrap = document.getElementById('cSlPriceWrap');
+      const pctWrap = document.getElementById('cSlPctWrap');
+
+      if (mode === 'price') {
+        priceBtn.classList.add('active');
+        pctBtn.classList.remove('active');
+        priceWrap.style.display = 'flex';
+        pctWrap.style.display = 'none';
+      } else {
+        pctBtn.classList.add('active');
+        priceBtn.classList.remove('active');
+        pctWrap.style.display = 'flex';
+        priceWrap.style.display = 'none';
+      }
+      cCalc();
+    }
+
+    function cSetTpMode(mode) {
+      const priceBtn = document.getElementById('cTpPriceBtn');
+      const pctBtn = document.getElementById('cTpPctBtn');
+      const priceWrap = document.getElementById('cTpPriceWrap');
+      const pctWrap = document.getElementById('cTpPctWrap');
+
+      if (mode === 'price') {
+        priceBtn.classList.add('active');
+        pctBtn.classList.remove('active');
+        priceWrap.style.display = 'flex';
+        pctWrap.style.display = 'none';
+      } else {
+        pctBtn.classList.add('active');
+        priceBtn.classList.remove('active');
+        pctWrap.style.display = 'flex';
+        priceWrap.style.display = 'none';
+      }
+      cCalc();
+    }
+
+    // ========== MAIN CALCULATION ==========
+    function cCalc() {
+      const capital = parseFloat(document.getElementById('cCapital').value) || 0;
+      const riskVal = parseFloat(document.getElementById('cRiskVal').value) || 0;
+      const riskMode = document.getElementById('cRiskPctBtn').classList.contains('active') ? 'pct' : 'usd';
+      const entry = parseFloat(document.getElementById('cEntry').value) || 0;
+      const leverage = parseFloat(document.getElementById('cLeverage').value) || 1;
+
+      // Calculate risk amount
+      let riskAmount = 0;
+      if (riskMode === 'pct') {
+        riskAmount = (capital * riskVal) / 100;
+      } else {
+        riskAmount = riskVal;
+      }
+
+      // Calculate Stop Loss
+      let slPrice = 0;
+      const slPriceMode = document.getElementById('cSlPriceBtn').classList.contains('active');
+      if (slPriceMode) {
+        slPrice = parseFloat(document.getElementById('cSLPrice').value) || 0;
+      } else {
+        const slPct = parseFloat(document.getElementById('cSLPct').value) || 0;
+        slPrice = entry * (1 - slPct / 100);
+      }
+
+      // Calculate position size
+      const slDistance = Math.abs(entry - slPrice);
+      let positionSize = slDistance > 0 ? riskAmount / slDistance : 0;
+
+      // Calculate required margin
+      let requiredMargin = (positionSize * entry) / leverage;
+
+      // Format outputs
+      document.getElementById('cOutRisk').textContent = '$' + riskAmount.toFixed(2);
+
+      // Calculate Target Profit
+      const tpPriceMode = document.getElementById('cTpPriceBtn').classList.contains('active');
+      const profitCard = document.getElementById('cProfitCard');
+      if (tpPriceMode) {
+        const tpPrice = parseFloat(document.getElementById('cTPPrice').value) || 0;
+        if (tpPrice > 0) {
+          const profitPerUnit = tpPrice - entry;
+          const totalProfit = profitPerUnit * positionSize;
+          document.getElementById('cOutProfit').textContent = '$' + totalProfit.toFixed(2);
+          document.getElementById('cOutProfitSub').textContent = 'at target price';
+          profitCard.style.opacity = totalProfit > 0 ? '1' : '0.35';
+          calculateRiskReward(riskAmount, Math.abs(totalProfit));
+        } else {
+          profitCard.style.opacity = '0.35';
+          document.getElementById('cRrSection').style.display = 'none';
+        }
+      } else {
+        const tpPct = parseFloat(document.getElementById('cTPPct').value) || 0;
+        if (tpPct > 0) {
+          const tpPrice = entry * (1 + tpPct / 100);
+          const profitPerUnit = tpPrice - entry;
+          const totalProfit = profitPerUnit * positionSize;
+          document.getElementById('cOutProfit').textContent = '$' + totalProfit.toFixed(2);
+          document.getElementById('cOutProfitSub').textContent = `at +${tpPct}%`;
+          profitCard.style.opacity = totalProfit > 0 ? '1' : '0.35';
+          calculateRiskReward(riskAmount, Math.abs(totalProfit));
+        } else {
+          profitCard.style.opacity = '0.35';
+          document.getElementById('cRrSection').style.display = 'none';
+        }
+      }
+
+      document.getElementById('cOutMargin').textContent = '$' + requiredMargin.toFixed(2);
+
+      // Leverage note
+      const levNote = document.getElementById('cLevNote');
+      if (leverage > 1) {
+        document.getElementById('cLevDisplay').textContent = leverage + '×';
+        document.getElementById('cLevNoteX').textContent = leverage + '×';
+        document.getElementById('cLevNotePos').textContent = '$' + (positionSize * entry).toFixed(2);
+        document.getElementById('cLevNoteMargin').textContent = '$' + requiredMargin.toFixed(2);
+        levNote.style.display = 'block';
+      } else {
+        levNote.style.display = 'none';
+      }
+    }
+
+    function calculateRiskReward(risk, reward) {
+      if (reward <= 0) return;
+      const ratio = reward / risk;
+      const rrSection = document.getElementById('cRrSection');
+      rrSection.style.display = 'block';
+      document.getElementById('cRrVal').textContent = ratio.toFixed(2) + ':1';
+
+      const fillPercent = Math.min((ratio / 3) * 100, 100);
+      document.getElementById('cRrFill').style.width = fillPercent + '%';
+    }
+
+    function toggleFaq(element) {
+      const answer = element.nextElementSibling;
+      const icon = element.querySelector('i');
+      answer.classList.toggle('show');
+      icon.style.transform = answer.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0)';
+    }
+
+    // Load defaults on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      loadDefaults();
+      cCalc();
+    });
+  </script>
+
   <script src="/load-components.js" defer></script>
   <script src="/functions.js" defer></script>
 </body>
