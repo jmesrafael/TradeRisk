@@ -56,7 +56,8 @@
     .calc-container {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 2rem;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
       margin-bottom: 3rem;
     }
     @media (max-width: 900px) {
@@ -69,16 +70,16 @@
       background: var(--cardBg);
       border: 1px solid var(--cardBorder);
       border-radius: 16px;
-      padding: 2rem;
+      padding: 1.5rem;
     }
     .ccol-title {
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--inputText);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.5rem;
     }
     .ccol-title i {
       color: var(--accent);
@@ -87,14 +88,14 @@
 
     /* Fields */
     .cfield {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
     .cflbl {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.75rem;
-      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
       font-weight: 600;
       color: var(--label);
     }
@@ -144,9 +145,9 @@
       background: var(--inputBg);
       border: 1px solid var(--inputBorder);
       color: var(--inputText);
-      padding: 12px 14px;
-      border-radius: 10px;
-      font-size: 1rem;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.95rem;
       font-weight: 600;
       outline: none;
       font-family: 'Outfit', sans-serif;
@@ -218,17 +219,17 @@
       display: flex;
     }
     .btn-set-def {
-      padding: 6px 12px;
+      padding: 5px 10px;
       background: var(--miniBtnBg);
       border: 1px solid var(--miniBtnBorder);
       color: var(--miniBtnText);
-      border-radius: 8px;
-      font-size: 0.85rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
       cursor: pointer;
       transition: all 0.15s ease;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.3rem;
       font-family: 'Outfit', sans-serif;
       font-weight: 600;
     }
@@ -240,7 +241,7 @@
     .cdiv {
       border: none;
       border-top: 1px solid var(--cardBorder);
-      margin: 1.5rem 0;
+      margin: 1rem 0;
     }
 
     .lev-note {
@@ -256,12 +257,12 @@
     /* Results */
     .result-stack {
       display: grid;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
     }
     .crc {
-      padding: 1.5rem;
-      border-radius: 12px;
+      padding: 1rem;
+      border-radius: 10px;
       border: 1px solid var(--cardBorder);
       background: var(--miniBtnBg);
       transition: all 0.2s ease;
@@ -273,18 +274,18 @@
       border-left: 3px solid #2ed573;
     }
     .crl {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--label);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
     .crv {
-      font-size: 1.75rem;
+      font-size: 1.5rem;
       font-weight: 800;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
       font-family: 'Outfit', sans-serif;
     }
     .crv.neg {
@@ -301,53 +302,53 @@
     .margin-card {
       background: linear-gradient(135deg, rgba(192,192,192,0.08) 0%, rgba(192,192,192,0.02) 100%);
       border: 1px solid var(--cardBorder);
-      border-radius: 12px;
-      padding: 1.5rem;
+      border-radius: 10px;
+      padding: 1rem;
       text-align: center;
     }
     .margin-card-label {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--label);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
     .margin-card-val {
-      font-size: 2rem;
+      font-size: 1.75rem;
       font-weight: 800;
       color: var(--accent);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
       font-family: 'Outfit', sans-serif;
     }
     .margin-card-sub {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--hint);
     }
 
     /* Risk/Reward */
     .rr-section {
-      margin-top: 1.5rem;
-      padding: 1rem;
+      margin-top: 1rem;
+      padding: 0.8rem;
       background: var(--miniBtnBg);
-      border-radius: 12px;
+      border-radius: 10px;
       border: 1px solid var(--cardBorder);
     }
     .rr-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
+      margin-bottom: 0.7rem;
       font-weight: 600;
     }
     .rr-label {
       color: var(--label);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
     .rr-val {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       color: var(--accent);
       font-family: 'Outfit', sans-serif;
     }
@@ -584,9 +585,9 @@
 
           <hr class="cdiv">
 
-          <!-- Entry Price -->
+          <!-- Entry Price (Optional) -->
           <div class="cfield">
-            <div class="cflbl"><div class="cflbl-left">Entry Price <span class="ctip" data-tip="The exact price at which you enter the trade on your chart.">?</span></div></div>
+            <div class="cflbl"><div class="cflbl-left">Entry Price <span style="font-size:0.8rem;color:var(--hint);">(Optional)</span> <span class="ctip" data-tip="Leave empty for basic calculations. Add for precise margin with leverage.">?</span></div></div>
             <div class="cinwrap"><span class="cipre">$</span><input class="cin pre" type="number" id="cEntry" placeholder="e.g. 70116.10" step="any" oninput="cCalc()"></div>
           </div>
 
@@ -649,9 +650,9 @@
           </div>
 
           <div class="margin-card">
-            <div class="margin-card-label"><i class="fa-solid fa-wallet"></i> Capital Required (Margin)</div>
+            <div class="margin-card-label"><i class="fa-solid fa-wallet"></i> <span id="cMarginLabel">Capital Required (Margin)</span></div>
             <div class="margin-card-val" id="cOutMargin">$0.00</div>
-            <div class="margin-card-sub" id="cOutMarginSub">enter trade details to calculate</div>
+            <div class="margin-card-sub" id="cOutMarginSub">enter stop loss and risk to calculate</div>
           </div>
 
           <!-- Risk/Reward Section -->
@@ -868,22 +869,36 @@
         riskAmount = riskVal;
       }
 
-      // Calculate Stop Loss
-      let slPrice = 0;
+      // Calculate Stop Loss percentage
+      let slPct = 0;
       const slPriceMode = document.getElementById('cSlPriceBtn').classList.contains('active');
       if (slPriceMode) {
-        slPrice = parseFloat(document.getElementById('cSLPrice').value) || 0;
+        const slPrice = parseFloat(document.getElementById('cSLPrice').value) || 0;
+        if (entry > 0) {
+          slPct = Math.abs((entry - slPrice) / entry) * 100;
+        }
       } else {
-        const slPct = parseFloat(document.getElementById('cSLPct').value) || 0;
-        slPrice = entry * (1 - slPct / 100);
+        slPct = parseFloat(document.getElementById('cSLPct').value) || 0;
       }
 
-      // Calculate position size
-      const slDistance = Math.abs(entry - slPrice);
-      let positionSize = slDistance > 0 ? riskAmount / slDistance : 0;
+      // Calculate position size and margin
+      let positionSize = 0;
+      let requiredMargin = 0;
 
-      // Calculate required margin
-      let requiredMargin = (positionSize * entry) / leverage;
+      if (slPct > 0 && riskAmount > 0) {
+        // Notional position value (can be calculated without entry price)
+        const notionalPosition = riskAmount / (slPct / 100);
+
+        if (entry > 0) {
+          // If entry is provided: calculate position in units and required margin
+          positionSize = notionalPosition / entry;
+          requiredMargin = (positionSize * entry) / leverage;
+        } else {
+          // Without entry: show notional exposure as margin requirement
+          positionSize = notionalPosition / leverage;
+          requiredMargin = positionSize;
+        }
+      }
 
       // Format outputs
       document.getElementById('cOutRisk').textContent = '$' + riskAmount.toFixed(2);
@@ -921,6 +936,16 @@
       }
 
       document.getElementById('cOutMargin').textContent = '$' + requiredMargin.toFixed(2);
+
+      // Update margin label based on entry price
+      const marginLabel = document.getElementById('cMarginLabel');
+      if (entry > 0) {
+        marginLabel.textContent = 'Total Margin';
+        document.getElementById('cOutMarginSub').textContent = 'at ' + leverage + 'x leverage';
+      } else {
+        marginLabel.textContent = 'Total Margin';
+        document.getElementById('cOutMarginSub').textContent = 'add entry for exact margin';
+      }
 
       // Leverage note
       const levNote = document.getElementById('cLevNote');
